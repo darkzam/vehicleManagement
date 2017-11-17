@@ -72,14 +72,57 @@ export class BikeComponent {
 		return false;
 	}
 
+	validateGearNum(gearNum:string):boolean{	
 
-	setErrorMsg(){
+		if (gearNum === '') {
+			return false;
+		}
 
-		let param = this.regNum;
+		if (gearNum.match(/^[0-9]+$/)==null ) {
 
-		this.msg = this.validateRegNum(param.trim());	
+			this.status = "Gear Number: must be a valid number";
+			return true;
+		}
+
+		if ( gearNum.length > 2 ){
+			this.status = "Gear Number: max 2 digits";
+			return true;
+		}
+
+		return false;
+
+	}
+
+
+
+	setErrorMsg(option:number){
+
+		switch (option) {
+			case 1:
+			{
+				let param = this.regNum;
+				this.msg = this.validateRegNum(param.trim());
+				break;
+			}
+
+			case 2:
+			{
+				let param = this.gearNum;
+				this.msg = this.validateGearNum(param.trim());
+				break;	
+			}	
+			
+			
+			default:
+			// code...
+			break;
+		}
+
+		
 
 
 	}
+
+
 
 }

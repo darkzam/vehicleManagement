@@ -16,7 +16,7 @@
 						<label> Registration Number:</label>
 						<input id="regNum" type="text" value="" 
 						[(ngModel)]="regNum"
-						(keyup)="setErrorMsg()"
+						(keyup)="setErrorMsg(1)"
 						>
 					</div>
 					<div class="field">
@@ -36,12 +36,16 @@
 					<div class="field">
 						<label> Gear Number:</label>
 						<input id="gearNum" type="text" value=""
-						[(ngModel)]="gearNum">
+						[(ngModel)]="gearNum"
+						(keyup)="setErrorMsg(2)">
 					</div>
 					<div class="field">
 						<label> Type:</label>
-						<input id="type" type="text" value=""
-						[(ngModel)]="type">
+						<select [(ngModel)]="type">
+							<option selected >Road</option>
+							<option>Mountain</option>
+							<option>BMX</option>
+						</select>
 					</div>
 					
 				</div>
