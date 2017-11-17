@@ -11,29 +11,41 @@ import { Bike } from './bike.model';
 
 export class BikeComponent {
 
-	bikes:Bike[];
+	bikes:Bike[] = [];
 
 	regNum:string ='';	// first character must be a capital letter
 	brand:string = '';
 	model:string = '';
-	gearNum:string = ''; //max 2 
+	gearNum:string = ''; //max 2
 	type:string = '';
 
 	types:string[] = ['Road', 'Mountain', 'BMX' ]; // one type between: road bike, mountain bike, BMX
 
 	msg:boolean = false;
-	status:string = '';	
+	status:string = '';
 
 	constructor(){}
 
 	createBike(){
+		//first validate all data
+		this.setErrorMsg(1);
+		this.setErrorMsg(2);
+		this.setErrorMsg(3);
+		this.setErrorMsg(4);
+		//if there's not error create Bike with params
+		if(!this.msg){
+
+			let bike: Bike = new Bike(this.regNum, this.brand, this.model, +this.gearNum, this.types[+this.type]);
+			this.bikes.push(bike),
+			console.log("succes");
+		}
 
 	}
 
 	validateRegNum(regNum:string):boolean{
-		
+
 		//return true if there's an error, false otherwise
-		console.log(regNum);
+		//console.log(regNum);
 		if (regNum === '') {
 			return false;
 		}
@@ -45,7 +57,7 @@ export class BikeComponent {
 			// it is true when string is a symbol
 			//OR it is tru when string is not a capital letter
 			this.status = "Registration Number: It must begin with a Capital Letter";
-			return true; 
+			return true;
 		}
 
 		//now checking for the required string size
@@ -57,13 +69,13 @@ export class BikeComponent {
 
 		//if the first char is a valid char Capital Letter
 		// then it checks the rest of the string
-		
+
 		if ((regNum.slice(1).charAt(0) === " ")||(isNaN(+regNum.slice(1)))) {
 			// it is true when uf the first char is a space
 			//OR
 			//it is true when the string contains a char +"324B" +"A234" +"23f24"
 			//it is true when the string contains spaces in the middle +"234 34"
-			//it is false when the rest of the string is a number +"3435345" 	
+			//it is false when the rest of the string is a number +"3435345"
 
 			this.status = "Registration Number: Capital Letter must be followed by a valid number";
 
@@ -74,7 +86,7 @@ export class BikeComponent {
 		return false;
 	}
 
-	validateGearNum(gearNum:string):boolean{	
+	validateGearNum(gearNum:string):boolean{
 
 		if (gearNum === '') {
 			return false;
@@ -110,27 +122,34 @@ export class BikeComponent {
 			{
 				let param = this.gearNum;
 				this.msg = this.validateGearNum(param.trim());
-				break;	
+				break;
 			}
 
-			case 3:	
+			case 3:
 			{
 				let param = this.type;
 				this.msg = this.validateType(param.trim());
-				break;	
+				break;
 			}
-			
+
 			default:
-			// code...
+					//validate if fields contain null strings
+					this.msg = false;
+					this.msg = (this.regNum === '' || this.brand === '' || this.model === '' || this.gearNum === '' || this.type === '');
+					this.status = (this.msg) ? "All fields must be filled" : '';
+
+					console.log(this.msg + " " + this.status);
+
 			break;
 		}
 
 	}
 
-	//it is necessary to create a function to validate type?
+	//checks if option of type is correct
+
 	validateType(option:string):boolean{
 
-		console.log("option "+ option);
+		//console.log("option "+ option);
 
 		if( (+option < 0 ) || (+option > this.types.length-1)){
 			this.status = "Type: option not available";
