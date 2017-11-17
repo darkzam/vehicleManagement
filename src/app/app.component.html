@@ -4,7 +4,21 @@
    App Component
   </h4>
 
-  <app-bike-component></app-bike-component>
- 
+  <div class="ui one column stackable center aligned page grid">
+     <div class="column six wide">
+       <div class="ui form">
+         <select (change)="onChange($event.target.value)">
+           <option value="0">Bike Management</option>
+           <option value="1">MotorCycle Management</option>
+           <option value="2" selected >Car Management</option>
+           <option value="3">Ship Management</option>
+         </select>
+     </div>
+     <div class="row"></div>
+  </div>
 </div>
 
+  <app-bike-component *ngIf="option==0"></app-bike-component>
+
+
+</div>
