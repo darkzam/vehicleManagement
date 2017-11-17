@@ -1,0 +1,84 @@
+
+<h4> Bike Component</h4>
+
+
+<div class="ui grid">
+	<div class="ui one wide column"></div>
+	<div class="ui six wide column">
+		<div class="ui row"></div>
+		<div class="ui segment container">
+
+			<div class="ui form">
+				<h3 class="ui dividing header"> Bike</h3>
+				<div class="three fields">
+
+					<div class="field">
+						<label> Registration Number:</label>
+						<input id="regNum" type="text" value="" 
+						[(ngModel)]="regNum"
+						(keyup)="validateRegNum2()"
+						>
+					</div>
+					<div class="field">
+						<label> Brand:</label>
+						<input id="brand" type="text" value=""
+						[(ngModel)]="brand">
+					</div>
+					<div class="field">
+						<label> Model:</label>
+						<input id="model" type="text" value=""
+						[(ngModel)]="model"
+						>
+					</div>
+				</div>
+				<div class="two fields">
+
+					<div class="field">
+						<label> Gear Number:</label>
+						<input id="gearNum" type="text" value=""
+						[(ngModel)]="gearNum">
+					</div>
+					<div class="field">
+						<label> Type:</label>
+						<input id="type" type="text" value=""
+						[(ngModel)]="type">
+					</div>
+					
+				</div>
+				<button (click)="createBike()" class="ui button">
+					Create Bike</button>
+
+
+				</div>
+			</div>
+			<div class="ui segment container" *ngIf="msg">
+				Error msg {{regNum}} + {{brand}} + {{model}}+ {{gearNum}} + {{type}}
+			</div>
+
+		</div>
+		<div class="ui six wide column">
+			<div class="ui row"></div>
+			<table class="ui celled table">
+				<thead>
+					<tr>
+						<th>Registration Number</th>
+						<th>Brand</th>
+						<th>Model</th>
+						<th>Gear Number</th>
+						<th>Type</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let bike of bikes">
+						<td>{{bike.regNum}}</td>
+						<td>{{bike.brand}}</td>
+						<td>{{bike.model}}</td>
+						<td>{{bike.gearNum}}</td>
+						<td>{{bike.type}}</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+
+	</div>
