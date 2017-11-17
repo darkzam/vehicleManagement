@@ -17,10 +17,12 @@ export class BikeComponent {
 	brand:string = '';
 	model:string = '';
 	gearNum:string = ''; //max 2 
-	type:string = ''; // one type between: road bike, mountain bike, BMX
+	type:string = '';
+
+	types:string[] = ['Road', 'Mountain', 'BMX' ]; // one type between: road bike, mountain bike, BMX
 
 	msg:boolean = false;
-	status:string = '';
+	status:string = '';	
 
 	constructor(){}
 
@@ -94,7 +96,6 @@ export class BikeComponent {
 	}
 
 
-
 	setErrorMsg(option:number){
 
 		switch (option) {
@@ -110,19 +111,34 @@ export class BikeComponent {
 				let param = this.gearNum;
 				this.msg = this.validateGearNum(param.trim());
 				break;	
-			}	
-			
+			}
+
+			case 3:	
+			{
+				let param = this.type;
+				this.msg = this.validateType(param.trim());
+				break;	
+			}
 			
 			default:
 			// code...
 			break;
 		}
 
-		
-
-
 	}
 
+	//it is necessary to create a function to validate type?
+	validateType(option:string):boolean{
+
+		console.log("option "+ option);
+
+		if( (+option < 0 ) || (+option > this.types.length-1)){
+			this.status = "Type: option not available";
+			return true;
+		}
+
+		return false;
+	}
 
 
 }

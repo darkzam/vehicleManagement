@@ -41,10 +41,10 @@
 					</div>
 					<div class="field">
 						<label> Type:</label>
-						<select [(ngModel)]="type">
-							<option selected >Road</option>
-							<option>Mountain</option>
-							<option>BMX</option>
+						<select [(ngModel)]="type" (change)="setErrorMsg(3)">
+							<option selected value="0" >Road</option>
+							<option value="1" >Mountain</option>
+							<option value="2" >BMX</option>
 						</select>
 					</div>
 					
@@ -56,7 +56,7 @@
 				</div>
 			</div>
 			<div class="ui segment container" *ngIf="msg">
-				<p> {{regNum}} </p>
+			
 				<p>{{status}} </p>
 			</div>
 
