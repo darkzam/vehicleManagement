@@ -16,7 +16,7 @@
 						<label> Registration Number:</label>
 						<input id="regNum" type="text" value="" 
 						[(ngModel)]="regNum"
-						(keyup)="validateRegNum2()"
+						(keyup)="setErrorMsg()"
 						>
 					</div>
 					<div class="field">
@@ -45,14 +45,15 @@
 					</div>
 					
 				</div>
-				<button (click)="createBike()" class="ui button">
+				<button [disabled]="msg" (click)="createBike()" class="ui button">
 					Create Bike</button>
 
 
 				</div>
 			</div>
 			<div class="ui segment container" *ngIf="msg">
-				Error msg {{regNum}} + {{brand}} + {{model}}+ {{gearNum}} + {{type}}
+				<p> {{regNum}} </p>
+				<p>{{status}} </p>
 			</div>
 
 		</div>
