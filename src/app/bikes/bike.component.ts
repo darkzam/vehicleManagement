@@ -166,7 +166,7 @@ export class BikeComponent implements OnInit {
 			//validate if brand and model fields contain null strings
 			{	
 				this.errors[3] = (this.brand)? false :true && btnPushed;
-				this.errorStatus[3] = (btnPushed && !this.errors[3])? "Brand: must be filled" : '' ; 
+				this.errorStatus[3] = (this.errors[3])? "Brand: must be filled" : '' ; 
 				break;
 			}
 
