@@ -45,14 +45,15 @@
 						<option value="0" >Road</option>
 						<option value="1" >Mountain</option>
 						<option value="2" >BMX</option>
+						<option value="3" >Wrong Option Test</option>
 					</select>
 				</div>
 
 			</div>
-			<button  (click)="createBike()" class="ui button">
+			<button [disabled]="validateErrors()" (click)="createBike()" class="ui button">
 				Create Bike</button>
 
-				<!-- [disabled]="validateErrors()" -->
+				<!--  -->
 			</div>
 		</div>
 		<div class="ui negative message" *ngIf="validateErrors()">
