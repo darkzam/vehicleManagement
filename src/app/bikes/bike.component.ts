@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { Bike } from './bike.model';
 
@@ -9,7 +9,7 @@ import { Bike } from './bike.model';
 	styleUrls: ['./bike.component.css']
 })
 
-export class BikeComponent {
+export class BikeComponent implements OnInit {
 
 	bikes:Bike[] = [];
 
@@ -20,20 +20,34 @@ export class BikeComponent {
 	type:string = '';
 
 	types:string[] = ['Road', 'Mountain', 'BMX' ]; // one type between: road bike, mountain bike, BMX
+	errors:boolean[] = [false,false,false,false,false];
+	errorStatus:string [] = ['','','','',''];
 
 	msg:boolean = false;
 	status:string = '';
 
 	constructor(){}
 
+	ngOnInit(){
+	}
+
 	createBike(){
 		//first validate all data
-		this.setErrorMsg(1);
-		this.setErrorMsg(2);
-		this.setErrorMsg(3);
+
+		
+		//
+		this.setErrorMsg(1,true);
+		console.log("Check Regnum " + this.errors);
+		this.setErrorMsg(2,true);
+		console.log("Check GearNum " + this.errors);
+		this.setErrorMsg(3,true);
+		console.log("Check Type " + this.errors);
 		this.setErrorMsg(4);
+		console.log("Check null fields " + this.errors);
 		//if there's not error create Bike with params
-		if(!this.msg){
+		
+
+		if(!this.validateErrors()){
 
 			let bike: Bike = new Bike(this.regNum, this.brand, this.model, +this.gearNum, this.types[+this.type]);
 			this.bikes.push(bike),
@@ -42,13 +56,26 @@ export class BikeComponent {
 
 	}
 
+	validateErrors():boolean{
+
+		let result:boolean = false;
+
+		this.errors.forEach( function(element,index,errors)
+		{
+			result = result || errors[index];
+		});
+
+		return result;
+
+	}
+
 	validateRegNum(regNum:string):boolean{
 
 		//return true if there's an error, false otherwise
 		//console.log(regNum);
-		if (regNum === '') {
+		/*if (regNum === '') {
 			return false;
-		}
+		}*/
 
 		//checking first char of the string
 		let firstChar = regNum.charAt(0);
@@ -56,14 +83,14 @@ export class BikeComponent {
 		if( (firstChar === firstChar.toUpperCase() && firstChar === firstChar.toLowerCase())|| (firstChar !== firstChar.toUpperCase())){
 			// it is true when string is a symbol
 			//OR it is tru when string is not a capital letter
-			this.status = "Registration Number: It must begin with a Capital Letter";
+			this.errorStatus[0] = "Registration Number: It must begin with a Capital Letter";
 			return true;
 		}
 
 		//now checking for the required string size
 
 		if ( regNum.length !== 10){
-			this.status = "Registration Number: Requires 10 Characters";
+			this.errorStatus[0] = "Registration Number: Requires 10 Characters";
 			return true;
 		}
 
@@ -77,71 +104,36 @@ export class BikeComponent {
 			//it is true when the string contains spaces in the middle +"234 34"
 			//it is false when the rest of the string is a number +"3435345"
 
-			this.status = "Registration Number: Capital Letter must be followed by a valid number";
+			this.errorStatus[0] = "Registration Number: Capital Letter must be followed by a valid number";
 
 			return true;
 
 		}
 
+		this.errorStatus[0] = '';
 		return false;
 	}
 
 	validateGearNum(gearNum:string):boolean{
 
-		if (gearNum === '') {
+	/*	if (gearNum === '') {
 			return false;
-		}
+		}*/
 
 		if (gearNum.match(/^[0-9]+$/)==null ) {
 
-			this.status = "Gear Number: must be a valid number";
+			this.errorStatus[1] = "Gear Number: must be a valid number";
 			return true;
 		}
 
 		if ( gearNum.length > 2 ){
-			this.status = "Gear Number: max 2 digits";
+			this.errorStatus[1] = "Gear Number: max 2 digits";
 			return true;
 		}
 
+		this.errorStatus[1]= '';
+
 		return false;
-
-	}
-
-
-	setErrorMsg(option:number){
-
-		switch (option) {
-			case 1:
-			{
-				let param = this.regNum;
-				this.msg = this.validateRegNum(param.trim());
-				break;
-			}
-
-			case 2:
-			{
-				let param = this.gearNum;
-				this.msg = this.validateGearNum(param.trim());
-				break;
-			}
-
-			case 3:
-			{
-				let param = this.type;
-				this.msg = this.validateType(param.trim());
-				break;
-			}
-
-			default:
-					//validate if fields contain null strings
-					this.msg = false;
-					this.msg = (this.regNum === '' || this.brand === '' || this.model === '' || this.gearNum === '' || this.type === '');
-					this.status = (this.msg) ? "All fields must be filled" : '';
-
-					console.log(this.msg + " " + this.status);
-
-			break;
-		}
 
 	}
 
@@ -151,13 +143,66 @@ export class BikeComponent {
 
 		//console.log("option "+ option);
 
+	/*	if (option === '') {
+			
+			return false;
+		}*/
+
 		if( (+option < 0 ) || (+option > this.types.length-1)){
-			this.status = "Type: option not available";
+			this.errorStatus[2] = "Type: option not available";
 			return true;
 		}
 
 		return false;
 	}
 
+
+
+
+	setErrorMsg(option:number, btnPushed:boolean = false){
+
+		switch (option) {
+			case 1:
+			{
+				let param = this.regNum;
+				this.msg = (param)? this.validateRegNum(param.trim()):false||btnPushed;
+				this.errorStatus[0] = (btnPushed && !param)? "Registration Number: must be filled" :this.errorStatus[0]; 
+				this.errors[0]= this.msg;
+
+				break;
+			}
+
+			case 2:
+			{
+				let param = this.gearNum;
+				this.msg = (param)? this.validateGearNum(param.trim()):false||btnPushed;
+				this.errorStatus[1] = (btnPushed && !param)? "Gear Number: must be filled" :this.errorStatus[1]; 
+				this.errors[1]= this.msg;
+				break;
+			}
+
+			case 3:
+			{
+				let param = this.type;
+				this.msg = (param)? this.validateType(param.trim()):false||btnPushed;
+				this.errorStatus[2] = (btnPushed && !param)? "Type: must be filled" :this.errorStatus[2]; 
+				this.errors[2]= this.msg;
+				break;
+			}
+
+			case 4:
+			//validate if brand and model fields contain null strings
+
+			this.errors[3] = this.errors[3]||((this.brand)?false:true);
+			this.errorStatus[3] = (this.errors[3])? "Brand: must be filled" : '' ; 
+
+			this.errors[4] = this.errors[4]||((this.model)?false:true);
+			this.errorStatus[4] = (this.errors[4])? "Model: must be filled" : '' ; 
+
+
+			break;
+		}
+
+	}
 
 }

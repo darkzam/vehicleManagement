@@ -1,7 +1,4 @@
 
-
-
-
 <div class="ui grid">
 	<div class="ui one wide column"></div>
 	<div class="ui six wide column">
@@ -11,81 +8,88 @@
 
 			<div class="ui form">
 				<h3 class="ui dividing header"> Bike</h3>
-				<div class="three fields">
+				<div class="three required fields">
 
-					<div class="field">
-						<label> Registration Number:</label>
-						<input id="regNum" type="text" value=""
-						[(ngModel)]="regNum"
-						(keyup)="setErrorMsg(1)"
-						>
-					</div>
-					<div class="field">
-						<label> Brand:</label>
-						<input id="brand" type="text" value=""
-						[(ngModel)]="brand"
-						(keyup)="msg=false">
-					</div>
-					<div class="field">
-						<label> Model:</label>
-						<input id="model" type="text" value=""
-						[(ngModel)]="model"
-						(keyup)="msg=false">
-					</div>
+					<div 
+					[ngClass]="(errors[0])?'field error':'field'">
+					<label> Registration Number:</label>
+					<input id="regNum" type="text" value=""
+					[(ngModel)]="regNum"
+					(keyup)="setErrorMsg(1)"
+					>
 				</div>
-				<div class="two fields">
-
-					<div class="field">
-						<label> Gear Number:</label>
-						<input id="gearNum" type="text" value=""
-						[(ngModel)]="gearNum"
-						(keyup)="setErrorMsg(2)">
-					</div>
-					<div class="field">
-						<label> Type:</label>
-						<select [(ngModel)]="type" (change)="setErrorMsg(3)">
-							<option selected value="0" >Road</option>
-							<option value="1" >Mountain</option>
-							<option value="2" >BMX</option>
-						</select>
-					</div>
-
+				<div [ngClass]="(errors[3])?'field error':'field'">
+					<label> Brand:</label>
+					<input id="brand" type="text" value=""
+					[(ngModel)]="brand"
+					(keyup)="errors[3]=false">
 				</div>
-				<button [disabled]="msg" (click)="createBike()" class="ui button">
-					Create Bike</button>
-
-
+				<div [ngClass]="(errors[4])?'field error':'field'">
+					<label> Model:</label>
+					<input id="model" type="text" value=""
+					[(ngModel)]="model"
+					(keyup)="errors[4]=false">
 				</div>
 			</div>
-			<div class="ui segment container" *ngIf="msg">
+			<div class="two required fields">
 
-				<p>{{status}} </p>
+				<div [ngClass]="(errors[1])?'field error':'field'">
+					<label> Gear Number:</label>
+					<input id="gearNum" type="text" value=""
+					[(ngModel)]="gearNum"
+					(keyup)="setErrorMsg(2)">
+				</div>
+				<div [ngClass]="(errors[2])?'field error':'field'">
+					<label> Type:</label>
+					<select [(ngModel)]="type" (change)="setErrorMsg(3)">
+						<option value="0" >Road</option>
+						<option value="1" >Mountain</option>
+						<option value="2" >BMX</option>
+					</select>
+				</div>
+
 			</div>
+			<button  (click)="createBike()" class="ui button">
+				Create Bike</button>
 
+				<!-- [disabled]="validateErrors()" -->
+			</div>
 		</div>
-		<div class="ui six wide column">
-			<div class="ui row"></div>
-			<table class="ui celled table">
-				<thead>
-					<tr>
-						<th>Registration Number</th>
-						<th>Brand</th>
-						<th>Model</th>
-						<th>Gear Number</th>
-						<th>Type</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let bike of bikes">
-						<td>{{bike.regNum}}</td>
-						<td>{{bike.brand}}</td>
-						<td>{{bike.model}}</td>
-						<td>{{bike.gearNum}}</td>
-						<td>{{bike.type}}</td>
-					</tr>
-
-				</tbody>
-			</table>
+		<div class="ui negative message" *ngIf="validateErrors()">
+			<div class="header">Validation Error</div>
+			<p>{{errorStatus[0]}} </p>
+			<p>{{errorStatus[1]}} </p>
+			<p>{{errorStatus[2]}} </p>
+			<p>{{errorStatus[3]}} </p>
+			<p>{{errorStatus[4]}} </p>
+			
 		</div>
 
 	</div>
+	<div class="ui six wide column">
+		<div class="ui row"></div>
+		<table class="ui celled table" 
+		*ngIf="bikes.length!==0">
+		<thead>
+			<tr>
+				<th>Registration Number</th>
+				<th>Brand</th>
+				<th>Model</th>
+				<th>Gear Number</th>
+				<th>Type</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let bike of bikes">
+				<td>{{bike.regNum}}</td>
+				<td>{{bike.brand}}</td>
+				<td>{{bike.model}}</td>
+				<td>{{bike.gearNum}}</td>
+				<td>{{bike.type}}</td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>
+
+</div>
