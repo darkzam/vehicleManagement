@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+
+  option:number;
+
+  onChange(option:string){
+
+    this.option = +option;
+
+  }
 }
