@@ -19,12 +19,10 @@ export class BikeComponent implements OnInit {
 	gearNum:string = ''; //max 2
 	type:string = '';
 
-	types:string[] = ['Road', 'Mountain', 'BMX' ]; // one type between: road bike, mountain bike, BMX
+	types:string[] = ['Road', 'Mountain', 'BMX' ]; 
+	// one type between: road bike, mountain bike, BMX
 	errors:boolean[] = [false,false,false,false,false];
 	errorStatus:string [] = ['','','','',''];
-
-	msg:boolean = false;
-	status:string = '';
 
 	constructor(){}
 
@@ -33,20 +31,16 @@ export class BikeComponent implements OnInit {
 
 	createBike(){
 		//first validate all data
-
-		
-		//
 		this.setErrorMsg(1,true);
 		console.log("Check Regnum " + this.errors);
 		this.setErrorMsg(2,true);
 		console.log("Check GearNum " + this.errors);
 		this.setErrorMsg(3,true);
 		console.log("Check Type " + this.errors);
-		this.setErrorMsg(4);
+		this.setErrorMsg(4,true);
+		this.setErrorMsg(5,true);
 		console.log("Check null fields " + this.errors);
 		//if there's not error create Bike with params
-		
-
 		if(!this.validateErrors()){
 
 			let bike: Bike = new Bike(this.regNum, this.brand, this.model, +this.gearNum, this.types[+this.type]);
@@ -72,11 +66,6 @@ export class BikeComponent implements OnInit {
 	validateRegNum(regNum:string):boolean{
 
 		//return true if there's an error, false otherwise
-		//console.log(regNum);
-		/*if (regNum === '') {
-			return false;
-		}*/
-
 		//checking first char of the string
 		let firstChar = regNum.charAt(0);
 
@@ -116,10 +105,6 @@ export class BikeComponent implements OnInit {
 
 	validateGearNum(gearNum:string):boolean{
 
-	/*	if (gearNum === '') {
-			return false;
-		}*/
-
 		if (gearNum.match(/^[0-9]+$/)==null ) {
 
 			this.errorStatus[1] = "Gear Number: must be a valid number";
@@ -141,23 +126,14 @@ export class BikeComponent implements OnInit {
 
 	validateType(option:string):boolean{
 
-		//console.log("option "+ option);
-
-	/*	if (option === '') {
-			
-			return false;
-		}*/
-
 		if( (+option < 0 ) || (+option > this.types.length-1)){
 			this.errorStatus[2] = "Type: option not available";
 			return true;
 		}
 
+		this.errorStatus[2]= '';
 		return false;
 	}
-
-
-
 
 	setErrorMsg(option:number, btnPushed:boolean = false){
 
@@ -165,42 +141,42 @@ export class BikeComponent implements OnInit {
 			case 1:
 			{
 				let param = this.regNum;
-				this.msg = (param)? this.validateRegNum(param.trim()):false||btnPushed;
+				this.errors[0] = (param)? this.validateRegNum(param.trim()):false||btnPushed;
 				this.errorStatus[0] = (btnPushed && !param)? "Registration Number: must be filled" :this.errorStatus[0]; 
-				this.errors[0]= this.msg;
-
 				break;
 			}
 
 			case 2:
 			{
 				let param = this.gearNum;
-				this.msg = (param)? this.validateGearNum(param.trim()):false||btnPushed;
+				this.errors[1]= (param)? this.validateGearNum(param.trim()):false||btnPushed;
 				this.errorStatus[1] = (btnPushed && !param)? "Gear Number: must be filled" :this.errorStatus[1]; 
-				this.errors[1]= this.msg;
 				break;
 			}
 
 			case 3:
 			{
 				let param = this.type;
-				this.msg = (param)? this.validateType(param.trim()):false||btnPushed;
+				this.errors[2]= (param)? this.validateType(param.trim()):false||btnPushed;
 				this.errorStatus[2] = (btnPushed && !param)? "Type: must be filled" :this.errorStatus[2]; 
-				this.errors[2]= this.msg;
 				break;
 			}
 
 			case 4:
 			//validate if brand and model fields contain null strings
+			{	
+				this.errors[3] = (this.brand)? false :true && btnPushed;
+				this.errorStatus[3] = (btnPushed && !this.errors[3])? "Brand: must be filled" : '' ; 
+				break;
+			}
 
-			this.errors[3] = this.errors[3]||((this.brand)?false:true);
-			this.errorStatus[3] = (this.errors[3])? "Brand: must be filled" : '' ; 
+			case 5:
+			{
+				this.errors[4] = (this.model)? false : true && btnPushed;
+				this.errorStatus[4] = (this.errors[4])? "Model: must be filled" : '' ; 
+				break;
+			}	
 
-			this.errors[4] = this.errors[4]||((this.model)?false:true);
-			this.errorStatus[4] = (this.errors[4])? "Model: must be filled" : '' ; 
-
-
-			break;
 		}
 
 	}

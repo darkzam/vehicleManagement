@@ -22,13 +22,13 @@
 					<label> Brand:</label>
 					<input id="brand" type="text" value=""
 					[(ngModel)]="brand"
-					(keyup)="errors[3]=false">
+					(keyup)="setErrorMsg(4)">
 				</div>
 				<div [ngClass]="(errors[4])?'field error':'field'">
 					<label> Model:</label>
 					<input id="model" type="text" value=""
 					[(ngModel)]="model"
-					(keyup)="errors[4]=false">
+					(keyup)="setErrorMsg(5)">
 				</div>
 			</div>
 			<div class="two required fields">
