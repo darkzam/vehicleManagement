@@ -16,24 +16,4 @@ export class Bike {
 		this.type = type;
 
 	}
-
-	getValidation(param:string|number,propertie:number):boolean{
-
-		let result:boolean = false;
-
-		switch (propertie) {
-			//Registration Number Validation
-			case 1:
-
-			break;
-			
-		}
-
-		return result;
-
-	}
-
-
-
-
 }
