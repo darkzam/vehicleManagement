@@ -1,0 +1,156 @@
+
+
+
+<div class="ui grid">
+	<div class="ui one wide column"></div>
+	<div class="ui six wide column">
+		
+		<div class="ui row"></div>
+		<h4>Ship Component Using Angular FormGroups</h4>
+		<div class="ui segment container">
+
+			<form [formGroup]="shipForm" (ngSubmit)="onSubmit()" class="ui form">
+				<h3 class="ui dividing header">Ship</h3>
+				<div class="three required fields">
+
+					<div 
+					[ngClass]="(shipForm.get('plateNum').dirty
+					&& !shipForm.get('plateNum').valid)?'field error':'field'">
+					<label> Plate Number:</label>
+					<input
+					id="regNum" type="text"
+					formControlName="plateNum"
+					>
+				</div>
+				<div [ngClass]="(shipForm.get('brand').dirty
+				&& !shipForm.get('brand').valid)?'field error':'field'">
+				<label> Brand:</label>
+				<input 
+				id="brand" type="text" value=""
+				formControlName="brand"
+				>
+			</div>
+			<div [ngClass]="(shipForm.get('model').dirty
+			&& !shipForm.get('model').valid)?'field error':'field'">
+			<label> Model:</label>
+			<input  
+			id="model" type="text" value=""
+			formControlName="model"
+			>
+		</div>
+	</div>
+	<div class="two required fields">
+
+
+		<div [ngClass]="(shipForm.get('type').dirty
+		&& !shipForm.get('type').valid)?'field error':'field'">
+		<label> Type:</label>
+		<select formControlName="type" (change)="onChange()">
+			<option *ngFor="let type of types" value="{{type}}">
+				{{type}}
+			</option>
+			<option value="Wrong Option Test">Wrong Option Test</option>
+		</select>
+	</div>
+
+	<div [ngClass]="(shipForm.get('maxSp').dirty
+	&& !shipForm.get('maxSp').valid)?'field error':'field'">
+	<label> Max Speed:</label>
+	<input  
+	id="maxSp" type="text" value=""
+	formControlName="maxSp"
+	>
+</div>
+
+</div>
+<button type="submit" class="ui button">
+	Create Ship</button>
+
+	<!--  -->
+</form>
+</div>
+<div class="ui negative message" 
+*ngIf=" shipForm.invalid && !shipForm.pristine" >
+<div class="header">Validation Error</div>
+<div class="ui list" 
+*ngIf="!shipForm.get('plateNum').valid 
+"
+> 
+<li *ngIf="shipForm.get('plateNum').errors['required']"> 
+	Plate Number must be filled
+</li>
+<p *ngIf="shipForm.get('plateNum').errors['pattern']">
+	Plate Number must follow the valid format </p> 
+</div>
+
+<div class="ui list" 
+*ngIf="!shipForm.get('type').valid 
+" > 
+
+<li *ngIf="shipForm.get('type').errors['required']">
+	Type must be filled
+</li>
+<li *ngIf="shipForm.get('type').errors['typeNotAllowed']">
+	Type not allowed
+</li>
+</div> 
+
+<div class="ui list" 
+*ngIf="!shipForm.get('brand').valid 
+" >
+<li *ngIf="shipForm.get('brand').errors['required']">
+	Brand must be filled
+</li> 
+</div>
+<div class="ui list" 
+*ngIf="!shipForm.get('model').valid 
+" > 
+<li *ngIf="shipForm.get('model').errors['required']">
+	Model must be filled
+</li>
+
+</div>
+<div class="ui list" 
+*ngIf="!shipForm.get('maxSp').valid
+" > 
+<li *ngIf="shipForm.get('maxSp').errors['required']">
+	Max Speed must be filled
+</li>
+<li *ngIf="shipForm.get('maxSp').errors['pattern']">
+	Max Speed must be a number
+</li>
+
+</div>
+
+</div>
+
+</div>
+<div class="ui six wide column">
+	<div class="ui row"></div>
+	<table class="ui celled table" 
+	*ngIf="ships.length>0">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Plate Number</th>
+			<th>Brand</th>
+			<th>Model</th>
+			<th>Type</th>
+			<th>Max Speed k/h</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let ship of ships; let i = index">
+			<td> {{i}} </td>
+			<td>{{ship.plateNum}}</td>
+			<td>{{ship.brand}}</td>
+			<td>{{ship.model}}</td>
+			<td>{{ship.type}}</td>
+			<td>{{ship.maxSpeed}}</td>
+		</tr>
+
+	</tbody>
+</table>
+</div>
+
+</div>

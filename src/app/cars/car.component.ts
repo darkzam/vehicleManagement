@@ -20,8 +20,6 @@ export class CarComponent implements OnInit{
 	types:string[] = ['Electric', 'Sport', 'HatchBack', 'Family'];
 	motors:string[] = ['1.0', '1.4', '1.8', '2', '2.5'];
 
-	sportSelected:boolean=false;
-
 	constructor(){}
 
 	ngOnInit(){
