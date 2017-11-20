@@ -8,9 +8,10 @@
      <div class="column six wide">
        <div class="ui form">
          <select (change)="onChange($event.target.value)">
+           <option value="-1" selected>Pick me</option>
            <option value="0">Bike Management</option>
            <option value="1">MotorCycle Management</option>
-           <option value="2" selected >Car Management</option>
+           <option value="2">Car Management</option>
            <option value="3">Ship Management</option>
          </select>
      </div>
@@ -20,6 +21,7 @@
 
   <app-bike-component *ngIf="option==0"></app-bike-component>
   <app-motorcycle-component *ngIf="option==1"></app-motorcycle-component>
+  <app-car-component *ngIf="option==2"></app-car-component>
 
 
 </div>

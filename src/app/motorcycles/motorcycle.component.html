@@ -131,15 +131,17 @@
 	*ngIf="motorcycles.length>0">
 	<thead>
 		<tr>
-			<th>Registration Number</th>
+			<th>Id</th>
+			<th>Plate Number</th>
 			<th>Brand</th>
 			<th>Model</th>
-			<th>Gear Number</th>
 			<th>Type</th>
+			<th>Motor Cc</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let motorcycle of motorcycles">
+		<tr *ngFor="let motorcycle of motorcycles; let i = index">
+			<td> {{i}} </td>
 			<td>{{motorcycle.plateNum}}</td>
 			<td>{{motorcycle.brand}}</td>
 			<td>{{motorcycle.model}}</td>

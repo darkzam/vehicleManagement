@@ -70,7 +70,7 @@
 	<div class="ui six wide column">
 		<div class="ui row"></div>
 		<table class="ui celled table" 
-		*ngIf="bikes.length!==0">
+		*ngIf="bikes.length>0">
 		<thead>
 			<tr>
 				<th>Registration Number</th>
@@ -81,7 +81,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let bike of bikes">
+			<tr *ngFor="let bike of bikes; let i = index">
+				<td>{{i}}</td>
 				<td>{{bike.regNum}}</td>
 				<td>{{bike.brand}}</td>
 				<td>{{bike.model}}</td>

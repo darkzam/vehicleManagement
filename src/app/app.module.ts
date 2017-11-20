@@ -6,12 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { BikeComponent } from './bikes/bike.component';
 import { MotorcycleComponent } from './motorcycles/motorcycle.component';
+import { CarComponent } from './cars/car.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BikeComponent,
-    MotorcycleComponent
+    MotorcycleComponent,
+    CarComponent
   ],
   imports: [
     BrowserModule,
