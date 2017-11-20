@@ -1,0 +1,178 @@
+
+
+<div class="ui grid">
+	<div class="ui one wide column"></div>
+	<div class="ui six wide column">
+		
+		<div class="ui row"></div>
+		<h4>Car Component Using Angular FormGroups</h4>
+		<div class="ui segment container">
+
+			<form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="ui form">
+				<h3 class="ui dividing header">Car</h3>
+				<div class="three required fields">
+
+					<div 
+					[ngClass]="(carForm.get('plateNum').dirty
+					&& !carForm.get('plateNum').valid)?'field error':'field'">
+					<label> Plate Number:</label>
+					<input
+					id="regNum" type="text"
+					formControlName="plateNum"
+					>
+				</div>
+				<div [ngClass]="(carForm.get('brand').dirty
+				&& !carForm.get('brand').valid)?'field error':'field'">
+				<label> Brand:</label>
+				<input 
+				id="brand" type="text" value=""
+				formControlName="brand"
+				>
+			</div>
+			<div [ngClass]="(carForm.get('model').dirty
+			&& !carForm.get('model').valid)?'field error':'field'">
+			<label> Model:</label>
+			<input  
+			id="model" type="text" value=""
+			formControlName="model"
+			>
+		</div>
+	</div>
+	<div class="three required fields">
+
+
+		<div [ngClass]="(carForm.get('type').dirty
+			&& !carForm.get('type').valid)?'field error':'field'">
+			<label> Type:</label>
+			<select formControlName="type" (change)="onChange()">
+				<option *ngFor="let type of types" value="{{type}}">
+					{{type}}
+				</option>
+				<option value="Wrong Option Test">Wrong Option Test</option>
+			</select>
+		</div>
+
+		<div [ngClass]="(carForm.get('motor').dirty
+			&& !carForm.get('motor').valid)?'field error':'field'">
+			<label> Motor:</label>
+			<select formControlName="motor" >
+				<option *ngFor="let motor of motors" value="{{motor}}" >
+					{{motor}}
+				</option>
+				<option value="Wrong Option" >Wrong Option Test</option>
+			</select>
+		</div>
+
+		<div [ngClass]="(carForm.get('maxSp').dirty
+			&& !carForm.get('maxSp').valid)?'field error':'field'">
+			<label> Max Speed:</label>
+			<input  
+			id="maxSp" type="text" value=""
+			formControlName="maxSp"
+			>
+		</div>
+
+	</div>
+	<button type="submit" class="ui button">
+		Create Bike</button>
+
+		<!--  -->
+	</form>
+</div>
+<div class="ui negative message" 
+*ngIf=" carForm.invalid && !carForm.pristine" >
+<div class="header">Validation Error</div>
+<div class="ui list" 
+*ngIf="!carForm.get('plateNum').valid 
+"
+> 
+<li *ngIf="carForm.get('plateNum').errors['required']"> 
+	Plate Number must be filled
+</li>
+<p *ngIf="carForm.get('plateNum').errors['pattern']">
+	Plate Number must follow the valid format </p> 
+</div>
+
+<div class="ui list" 
+*ngIf="!carForm.get('type').valid 
+" > 
+
+<li *ngIf="carForm.get('type').errors['required']">
+	Type must be filled
+</li>
+<li *ngIf="carForm.get('type').errors['typeNotAllowed']">
+	Type not allowed
+</li>
+</div> 
+<div class="ui list" 
+*ngIf="!carForm.get('motor').valid 
+" > 
+
+<li *ngIf="carForm.get('motor').errors['required']">
+	Motor must be filled
+</li>
+<li *ngIf="carForm.get('motor').errors['motorNotAllowed']">
+	Motor not allowed
+</li>
+</div>	
+<div class="ui list" 
+*ngIf="!carForm.get('brand').valid 
+" >
+<li *ngIf="carForm.get('brand').errors['required']">
+	Brand must be filled
+</li> 
+</div>
+<div class="ui list" 
+*ngIf="!carForm.get('model').valid 
+" > 
+<li *ngIf="carForm.get('model').errors['required']">
+	Model must be filled
+</li>
+
+</div>
+<div class="ui list" 
+*ngIf="!carForm.get('maxSp').valid
+" > 
+<li *ngIf="carForm.get('maxSp').errors['required']">
+	Max Speed must be filled for Sport Type
+</li>
+<li *ngIf="carForm.get('maxSp').errors['pattern']">
+	Max Speed must be a number
+</li>
+
+</div>
+
+</div>
+
+</div>
+<div class="ui six wide column">
+	<div class="ui row"></div>
+	<table class="ui celled table" 
+	*ngIf="cars.length>0">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Plate Number</th>
+			<th>Brand</th>
+			<th>Model</th>
+			<th>Type</th>
+			<th>Motor</th>
+			<th>Max Speed</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let car of cars; let i = index">
+			<td> {{i}} </td>
+			<td>{{car.plateNum}}</td>
+			<td>{{car.brand}}</td>
+			<td>{{car.model}}</td>
+			<td>{{car.type}}</td>
+			<td>{{car.motor}}</td>
+			<td>{{car.maxSpeed}}</td>
+		</tr>
+
+	</tbody>
+</table>
+</div>
+
+</div>
