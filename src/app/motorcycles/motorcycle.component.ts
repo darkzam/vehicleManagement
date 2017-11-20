@@ -19,9 +19,6 @@ export class MotorcycleComponent implements OnInit{
 	types:string[] = ['Electric', 'Chopper', 'Street', 'Ninja'];
 	motors:string[] = ['100', '125', '180', '250', '500', '1000'];
 
-	errors:boolean[] = [false,false,false,false,false];
-	errorStatus:string[] = ['','','','',''];
-
 	constructor(){}
 
 	ngOnInit(){
@@ -45,6 +42,14 @@ export class MotorcycleComponent implements OnInit{
 
 		if(this.motorCycleForm.valid){
 
+			let motorcycle = new Motorcycle(
+				this.motorCycleForm.get('plateNum').value,
+				this.motorCycleForm.get('brand').value,
+				this.motorCycleForm.get('model').value,
+				this.motorCycleForm.get('type').value,
+				+this.motorCycleForm.get('motor').value);
+
+			this.motorcycles.push(motorcycle);
 			console.log("succes");
 
 		}
@@ -81,13 +86,18 @@ export class MotorcycleComponent implements OnInit{
 	onChange(){
 
 		let value = this.motorCycleForm.get('type').value;
-		this.motors = ( value === 'Ninja')?['500','1000']:['100', '125', '180', '250', '500', '1000'];
-		this.motorCycleForm.patchValue({
-			'motor': (( value === 'Ninja')? '': value)
-		});
-	}
 
-	
+		if(value === 'Ninja'){
+
+			this.motors = ['500','1000']
+			this.motorCycleForm.get('motor').reset();
+		}
+		else {
+
+			this.motors = ['100', '125', '180', '250', '500', '1000'];
+
+		}
+	}
 
 
 }
