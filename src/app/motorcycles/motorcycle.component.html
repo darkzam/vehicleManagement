@@ -1,0 +1,144 @@
+
+
+<div class="ui grid">
+	<div class="ui one wide column"></div>
+	<div class="ui six wide column">
+		
+		<div class="ui row"></div>
+		<div class="ui segment container">
+
+			<form [formGroup]="motorCycleForm" (ngSubmit)="onSubmit()" class="ui form">
+				<h3 class="ui dividing header">MotorCycle</h3>
+				<div class="three required fields">
+
+					<div 
+					[ngClass]="!(motorCycleForm.get('plateNum').valid && motorCycleForm.get('plateNum').touched)?'field error':'field'">
+					<label> Plate Number:</label>
+					<input id="regNum" type="text" value=""
+					formControlName="plateNum"
+					>
+				</div>
+				<div [ngClass]="(false)?'field error':'field'">
+					<label> Brand:</label>
+					<input id="brand" type="text" value=""
+					formControlName="brand"
+					>
+				</div>
+				<div [ngClass]="(false)?'field error':'field'">
+					<label> Model:</label>
+					<input id="model" type="text" value=""
+					formControlName="model"
+					>
+				</div>
+			</div>
+			<div class="two required fields">
+
+				
+				<div [ngClass]="(false)?'field error':'field'">
+					<label> Type:</label>
+					<select formControlName="type" (change)="onChange()">
+						<option *ngFor="let type of types" value="{{type}}">
+						{{type}}
+						</option>
+						<option value="Wrong Option Test">Wrong Option Test</option>
+					</select>
+				</div>
+
+				<div [ngClass]="(false)?'field error':'field'">
+					<label> Motor cc:</label>
+					<select formControlName="motor" >
+						<option *ngFor="let motorcc of motors" value="{{motorcc}}" >
+							{{motorcc}} cc.
+						</option>
+						<option value="Wrong Option" >Wrong Option Test</option>
+					</select>
+				</div>
+
+			</div>
+			<button type="submit" class="ui button">
+				Create Bike</button>
+
+				<!--  -->
+			</form>
+		</div>
+		<div class="ui negative message" 
+		*ngIf=" motorCycleForm.invalid && !motorCycleForm.pristine" >
+		<div class="header">Validation Error</div>
+		<p 
+		*ngIf="!motorCycleForm.get('plateNum').valid 
+		 " > 
+		<span *ngIf="motorCycleForm.get('plateNum').errors['required']"> 
+			Plate Number must be filled
+		</span>
+		<span *ngIf="motorCycleForm.get('plateNum').errors['pattern']">
+			Plate Number must follow the valid format </span> 
+		</p>
+
+		<p 
+		*ngIf="!motorCycleForm.get('type').valid 
+		 " > 
+
+		<span *ngIf="motorCycleForm.get('type').errors['required']">
+			Type must be filled
+		</span>
+		<span *ngIf="motorCycleForm.get('type').errors['typeNotAllowed']">
+			Type not allowed
+		</span>
+				</p> 
+			<p 
+		*ngIf="!motorCycleForm.get('motor').valid 
+		 " > 
+
+		<span *ngIf="motorCycleForm.get('motor').errors['required']">
+			MotorCc must be filled
+		</span>
+		<span *ngIf="motorCycleForm.get('motor').errors['motorCCNotAllowed']">
+			MotorCc not allowed => {{motorCycleForm.get('motor').value}}
+		</span>
+				</p>	
+		<p 
+		*ngIf="!motorCycleForm.get('brand').valid 
+		 " >
+		 <span *ngIf="motorCycleForm.get('brand').errors['required']">
+			Brand must be filled
+		</span> 
+		 </p>
+		<p 
+		*ngIf="!motorCycleForm.get('model').valid 
+		 " > 
+		 <span *ngIf="motorCycleForm.get('model').errors['required']">
+			Model must be required
+		</span>
+
+		</p>
+
+</div>
+
+</div>
+<div class="ui six wide column">
+	<div class="ui row"></div>
+	<table class="ui celled table" 
+	*ngIf="motorcycles.length>0">
+	<thead>
+		<tr>
+			<th>Registration Number</th>
+			<th>Brand</th>
+			<th>Model</th>
+			<th>Gear Number</th>
+			<th>Type</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let motorcycle of motorcycles">
+			<td>{{motorcycle.plateNum}}</td>
+			<td>{{motorcycle.brand}}</td>
+			<td>{{motorcycle.model}}</td>
+			<td>{{motorcycle.type}}</td>
+			<td>{{motorcycle.motor}}</td>
+		</tr>
+
+	</tbody>
+</table>
+</div>
+
+</div>
