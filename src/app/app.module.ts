@@ -7,7 +7,9 @@ import { AppComponent } from './app.component';
 import { BikeComponent } from './bikes/bike.component';
 import { MotorcycleComponent } from './motorcycles/motorcycle.component';
 import { CarComponent } from './cars/car.component';
-import { ShipComponent } from './ships/ship.component'
+import { ShipComponent } from './ships/ship.component';
+
+import { DataService } from './services/data.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,7 @@ import { ShipComponent } from './ships/ship.component'
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

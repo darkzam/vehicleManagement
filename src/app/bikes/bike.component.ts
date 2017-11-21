@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { Bike } from './bike.model';
 
+import { DataService } from '../services/data.service';
+
 @Component({
 	selector: 'app-bike-component',
 	templateUrl: './bike.component.html',
@@ -24,7 +26,12 @@ export class BikeComponent implements OnInit {
 	errors:boolean[] = [false,false,false,false,false];
 	errorStatus:string [] = ['','','','',''];
 
-	constructor(){}
+	//tempvariable to show error of duplicate bike
+	duplicate:boolean = false;
+
+	constructor(private dataService: DataService){
+		//this.bikes = this.dataService.getBikes();
+	}
 
 	ngOnInit(){
 	}
@@ -44,7 +51,12 @@ export class BikeComponent implements OnInit {
 		if(!this.validateErrors()){
 
 			let bike: Bike = new Bike(this.regNum, this.brand, this.model, +this.gearNum, this.types[+this.type]);
-			this.bikes.push(bike),
+			//this.bikes.push(bike),
+			console.log(this.duplicate);
+			this.duplicate = this.dataService.addBike(bike);
+
+			this.bikes = this.dataService.getBikes();
+			console.log(this.bikes);
 			console.log("succes");
 		}
 
